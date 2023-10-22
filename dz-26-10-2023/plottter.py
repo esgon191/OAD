@@ -27,7 +27,8 @@ fig, ax_left = plt.subplots()
 
 plt.title('S-кривая по проекту "обустройство месторождения"',  
     fontdict={"fontsize": 16, 
-                "fontweight": "bold"})
+                "fontweight": "bold"},
+    loc='left')
 
 #подпись под осью x
 ax_left.set_xticks(range(len(data['План/Факт/Прогноз'])))
