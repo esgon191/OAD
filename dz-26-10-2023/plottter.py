@@ -14,15 +14,25 @@ def oblast_opr(x, y):
 
     return xnew, ynew
 
-
+#считание данных из подготовленной csvшки
 data = reader.read()
+
+#создание координат по Оx
 x = np.arange(0, len(data['План/Факт/Прогноз']), 1)
+
+plt.rcParams['figure.figsize'] = [16, 9]
+
+#создание окна и левой оси y
 fig, ax_left = plt.subplots()
+
+plt.title('S-кривая по проекту "обустройство месторождения"',  
+    fontdict={"fontsize": 16, 
+                "fontweight": "bold"})
 
 #подпись под осью x
 ax_left.set_xticks(range(len(data['План/Факт/Прогноз'])))
 plt.xticks(rotation='vertical')
-ax_left.set_xticklabels(data['План/Факт/Прогноз'])
+ax_left.set_xticklabels(data['План/Факт/Прогноз'], fontsize=8)
 
 #ax_left
 ax_left.set_ylabel('% за период') 
@@ -40,5 +50,10 @@ ax_right.plot(*oblast_opr(x, data['Факт накопительно']), color='
 ax_right.plot(*oblast_opr(x, data['Прогноз накопительно']), color='#00b050',linestyle='--', label='Прогноз накопительно')
 ax_right.set_ylim(0, 100)
 ax_right.tick_params(axis ='y') 
+
+#legend
+fig.add_artist(ax_left.legend(loc='upper right'))
+fig.add_artist(ax_right.legend(loc='center right'))
+#fig.legend(loc='center right')
 
 plt.show()
