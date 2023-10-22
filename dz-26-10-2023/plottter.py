@@ -18,8 +18,8 @@ def oblast_opr(x, y):
 data = reader.read()
 
 #создание координат по Оx
-x = np.arange(0, len(data['План/Факт/Прогноз']), 1)
-
+x = np.arange(-0.25, len(data['План/Факт/Прогноз']), 1)
+x2 = [i+0.5 for i in x]
 plt.rcParams['figure.figsize'] = [16, 9]
 
 #создание окна и левой оси y
@@ -37,8 +37,8 @@ ax_left.set_xticklabels(data['План/Факт/Прогноз'], fontsize=8)
 
 #ax_left
 ax_left.set_ylabel('% за период') 
-ax_left.bar(*oblast_opr(x, data['План за период']), color='#548ed5', label='План за период')
-ax_left.bar(*oblast_opr(x, data['Факт за период']), color='#d99694', label='Факт за период')
+ax_left.bar(*oblast_opr(x, data['План за период']), width=0.45, color='#548ed5', label='План за период')
+ax_left.bar(*oblast_opr(x2, data['Факт за период']), width=0.45, color='#d99694', label='Факт за период')
 ax_left.tick_params(axis ='y') 
 ax_left.set_ylim(0, 20)
 ax_left.grid(axis='y')
@@ -57,4 +57,5 @@ fig.add_artist(ax_left.legend(loc='upper right'))
 fig.add_artist(ax_right.legend(loc='center right'))
 #fig.legend(loc='center right')
 
+plt.tight_layout()
 plt.show()
