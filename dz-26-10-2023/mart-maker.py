@@ -6,7 +6,11 @@ def calculate(month_number, year_number, pid, type_op, table):
     res = 0
     for opid in table.keys():
         if type_op == table[opid]['type'] and pid == table[opid]['project_id']:
-            if month_number == table[opid]['month'] and year_number == table[opid]['year']:
+            if month_number != -1 and year_number != -1:
+                if month_number == table[opid]['month'] and year_number == table[opid]['year']:
+                    res += table[opid]['sum']
+
+            else:
                 res += table[opid]['sum']
 
     return res
@@ -108,6 +112,18 @@ with open('Витрина.csv', 'w', encoding='utf-8', newline='') as file:
             })
 
 
-
-
-
+with open('Менеджеры.csv', 'w', encoding='utf-8', newline='') as file:
+    fieldnames = ('Менеджер', 'Расход')
+    writer = csv.DictWriter(file, fieldnames=fieldnames)
+    writer.writeheader()
+    
+    man = {i : 0 for i in list(set([j['managerid'] for j in data['cards']]))}
+    
+    for elem in data['cards']:
+        man[elem['managerid']] += calculate(-1, -1, elem['id'], -1, data['history'])
+    
+    for elem in man.keys():
+        writer.writerow({
+            'Менеджер' : data['dol'][elem]['name'],
+            'Расход' : man[elem] 
+            })
